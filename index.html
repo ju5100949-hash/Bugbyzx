@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ZaxxCr4sher</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOGIN / REGISTER SCREEN ============ -->
+<div id="authScreen" class="auth-screen">
+  <video class="auth-bg" autoplay muted loop playsinline>
+    <source src="bg-login.mp4" type="video/mp4">
+  </video>
+  <div class="auth-overlay"></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-mark">ZX</div>
+      <h1>ZAXXCR4SHER</h1>
+      <p class="auth-sub">by zaax</p>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm" class="auth-form active">
+      <h2>Login</h2>
+      <input type="text" id="loginUser" placeholder="Username" autocomplete="off">
+      <input type="password" id="loginPass" placeholder="Password">
+      <button class="btn-primary" onclick="doLogin()">Masuk</button>
+      <p class="switch-text">Belum punya akun? <span onclick="switchAuth('register')">Create Account</span></p>
+      <p class="owner-hint">Owner? Langsung login pakai kredensial owner.</p>
+    </div>
+
+    <!-- Register Form -->
+    <div id="registerForm" class="auth-form">
+      <h2>Create Account</h2>
+      <input type="text" id="regUser" placeholder="Username baru" autocomplete="off">
+      <input type="password" id="regPass" placeholder="Password">
+      <input type="password" id="regPass2" placeholder="Ulangi Password">
+      <button class="btn-primary" onclick="doRegister()">Daftar</button>
+      <p class="switch-text">Sudah punya akun? <span onclick="switchAuth('login')">Login</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MAIN APP ============ -->
+<div id="appScreen" class="app-screen hidden">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <button class="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-title">ZAXXCR4SHER</div>
+    <div class="topbar-avatar" onclick="goPage('account')">
+      <img id="topAvatar" src="assets/default-avatar.png" alt="avatar">
+    </div>
+  </header>
+
+  <!-- Side Drawer -->
+  <aside id="drawer" class="drawer">
+    <div class="drawer-head">
+      <div class="drawer-avatar">
+        <img id="drawerAvatar" src="assets/default-avatar.png" alt="avatar">
+      </div>
+      <div>
+        <div id="drawerName" class="drawer-name">Guest</div>
+        <div id="drawerStatus" class="drawer-status">Free User</div>
+      </div>
+    </div>
+    <nav class="drawer-nav">
+      <a onclick="goPage('server')">Server</a>
+      <a onclick="goPage('dashboard')">Dashboard</a>
+      <a onclick="goPage('account')">Account</a>
+      <a onclick="goPage('chatroom')">Chat Room</a>
+      <a onclick="logout()" class="drawer-logout">Logout</a>
+    </nav>
+  </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" onclick="toggleDrawer()"></div>
+
+  <!-- Pages Container -->
+  <main id="pageContainer" class="page-container">
+
+    <!-- ===== LOBBY ===== -->
+    <section id="page-lobby" class="page active">
+      <div class="lobby-logo">
+        <div class="logo-mark big">ZX</div>
+        <h1 class="lobby-title">ZAXXCR4SHER</h1>
+        <p class="lobby-tag">by zaax</p>
+      </div>
+
+      <div class="banner-wrap">
+        <video class="banner-video" autoplay muted loop playsinline>
+          <source src="banner.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-label">Device</div>
+          <div id="deviceInfo" class="info-value">Detecting...</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">Sender</div>
+          <div id="senderInfo" class="info-value">Belum terhubung</div>
+        </div>
+      </div>
+
+      <div class="bug-info-card">
+        <div class="bug-info-title">Bug Information</div>
+        <p>6 bug tersedia di menu. Wajib pakai nomor target sebelum eksekusi. Gunakan dengan bijak — risiko ban ditanggung user.</p>
+        <div class="bug-chips">
+          <span>Delay Invisible</span>
+          <span>Forclose Invisible</span>
+          <span>Kill UI Invisible</span>
+          <span>Delay God</span>
+          <span>FC God</span>
+          <span>Ultra Delay</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVER ===== -->
+    <section id="page-server" class="page">
+      <h2 class="page-title">Server</h2>
+      <div class="server-card">
+        <div class="status-dot online"></div>
+        <div>
+          <div class="server-name">ZaxxCore-01</div>
+          <div class="server-meta">Online — 42ms — Singapore</div>
+        </div>
+      </div>
+      <div class="server-card">
+        <div class="status-dot online"></div>
+        <div>
+          <div class="server-name">ZaxxCore-02</div>
+          <div class="server-meta">Online — 58ms — Jakarta</div>
+        </div>
+      </div>
+      <div class="server-card">
+        <div class="status-dot offline"></div>
+        <div>
+          <div class="server-name">ZaxxCore-03</div>
+          <div class="server-meta">Maintenance</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DASHBOARD ===== -->
+    <section id="page-dashboard" class="page">
+      <h2 class="page-title">Dashboard</h2>
+      <div class="dash-grid">
+        <button class="dash-tile" onclick="goPage('lobby')">Lobby</button>
+        <button class="dash-tile" onclick="goPage('account')">Account</button>
+        <button class="dash-tile" onclick="goPage('sender')">Sender</button>
+        <button class="dash-tile" onclick="goPage('bugmenu')">Bug Menu</button>
+        <button class="dash-tile" onclick="goPage('redeem')">Redeem Kode</button>
+        <button class="dash-tile" onclick="goPage('buyvip')">Buy VIP</button>
+      </div>
+    </section>
+
+    <!-- ===== ACCOUNT ===== -->
+    <section id="page-account" class="page">
+      <h2 class="page-title">Account</h2>
+      <div class="account-card">
+        <div class="account-avatar-wrap">
+          <img id="accountAvatar" src="assets/default-avatar.png" alt="avatar">
+          <label class="avatar-upload">
+            <input type="file" accept="image/*" onchange="changeAvatar(event)">
+            <span>Ganti Foto</span>
+          </label>
+        </div>
+        <div class="account-info">
+          <div class="acc-row"><span>Username</span><b id="accUser">-</b></div>
+          <div class="acc-row"><span>Status</span><b id="accStatus">Free</b></div>
+          <div class="acc-row"><span>Sender</span><b id="accSender">-</b></div>
+        </div>
+      </div>
+      <button class="btn-secondary" onclick="openResetPass()">Reset Password</button>
+      <button class="btn-danger" onclick="logout()">Logout</button>
+    </section>
+
+    <!-- ===== SENDER ===== -->
+    <section id="page-sender" class="page">
+      <h2 class="page-title">Sender</h2>
+      <div class="sender-card">
+        <p class="sender-desc">Masukkan nomor WhatsApp untuk pairing.</p>
+        <input type="tel" id="senderNumber" placeholder="Contoh: 6281234567890">
+        <button class="btn-primary" onclick="startPairing()">Enter</button>
+      </div>
+
+      <div id="pairingBox" class="pairing-box hidden">
+        <div id="pairingLoading" class="pairing-loading">
+          <div class="spinner"></div>
+          <p>Menghubungkan ke server...</p>
+        </div>
+        <div id="pairingCode" class="pairing-code hidden">
+          <p class="pairing-label">Kode Pairing</p>
+          <div id="codeDigits" class="code-digits">------</div>
+          <p class="pairing-note">Masukkan kode ini di WhatsApp > Linked Devices</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BUG MENU ===== -->
+    <section id="page-bugmenu" class="page">
+      <h2 class="page-title">Bug Menu</h2>
+      <div class="bug-target-wrap">
+        <input type="tel" id="bugTarget" placeholder="Nomor target (wajib)">
+      </div>
+      <div class="bug-grid">
+        <button class="bug-btn" onclick="runBug('Delay Invisible')">Delay Invisible</button>
+        <button class="bug-btn" onclick="runBug('Forclose Invisible')">Forclose Invisible</button>
+        <button class="bug-btn" onclick="runBug('Kill UI Invisible')">Kill UI Invisible</button>
+        <button class="bug-btn" onclick="runBug('Delay God')">Delay God</button>
+        <button class="bug-btn" onclick="runBug('FC God')">FC God</button>
+        <button class="bug-btn" onclick="runBug('Ultra Delay')">Ultra Delay</button>
+      </div>
+      <div id="bugLog" class="bug-log hidden"></div>
+    </section>
+
+    <!-- ===== BUY VIP ===== -->
+    <section id="page-buyvip" class="page">
+      <h2 class="page-title">Buy VIP</h2>
+      <div class="vip-card">
+        <div class="vip-name">Premium</div>
+        <div class="vip-price">Rp 100.000<span>/bulan</span></div>
+        <ul class="vip-feat">
+          <li>Semua bug basic</li>
+          <li>Sender unlimited</li>
+          <li>Priority server</li>
+        </ul>
+        <button class="btn-primary" onclick="buyVIP('Premium')">Beli</button>
+      </div>
+      <div class="vip-card highlight">
+        <div class="vip-name">God Only</div>
+        <div class="vip-price">Rp 200.000<span>/bulan</span></div>
+        <ul class="vip-feat">
+          <li>Semua bug premium</li>
+          <li>Delay God + FC God</li>
+          <li>Anti-limit server</li>
+        </ul>
+        <button class="btn-primary" onclick="buyVIP('God Only')">Beli</button>
+      </div>
+      <div class="vip-card">
+        <div class="vip-name">Reseller</div>
+        <div class="vip-price">Rp 500.000<span>/bulan</span></div>
+        <ul class="vip-feat">
+          <li>Akses semua fitur</li>
+          <li>Bisa jual ulang</li>
+          <li>Dashboard reseller</li>
+        </ul>
+        <button class="btn-primary" onclick="buyVIP('Reseller')">Beli</button>
+      </div>
+    </section>
+
+    <!-- ===== REDEEM ===== -->
+    <section id="page-redeem" class="page">
+      <h2 class="page-title">Redeem Kode</h2>
+      <div class="redeem-card">
+        <input type="text" id="redeemCode" placeholder="Masukkan kode">
+        <button class="btn-primary" onclick="redeemCode()">Redeem</button>
+        <p id="redeemMsg" class="redeem-msg"></p>
+      </div>
+    </section>
+
+    <!-- ===== CHAT ROOM ===== -->
+    <section id="page-chatroom" class="page">
+      <h2 class="page-title">Chat Room</h2>
+      <div class="chat-box" id="chatBox">
+        <div class="chat-msg system">Selamat datang di Chat Room ZaxxCr4sher.</div>
+      </div>
+      <div class="chat-input-wrap">
+        <input type="text" id="chatInput" placeholder="Ketik pesan..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button onclick="sendChat()">Kirim</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navbar -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="lobby" onclick="goPage('lobby')">Lobby</button>
+    <button class="nav-btn" data-page="sender" onclick="goPage('sender')">Sender</button>
+    <button class="nav-btn" data-page="buyvip" onclick="goPage('buyvip')">Buy VIP</button>
+  </nav>
+
+</div>
+
+<!-- Reset Password Modal -->
+<div id="resetModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Reset Password</h3>
+    <input type="password" id="oldPass" placeholder="Password lama">
+    <input type="password" id="newPass" placeholder="Password baru">
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeResetPass()">Batal</button>
+      <button class="btn-primary" onclick="saveResetPass()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
